@@ -22,11 +22,7 @@ public class JwtTokenHelper {
 
 	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
-	private String secret = "UQH0lR95aS7KM0Xs1PHTOsgK9eT45ZnF";
-
-	private SecretKey getSigningKey() {
-		return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
-	}
+	private SecretKey secret = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
 	// retieve username from Token
 	public String getUsernameFromToken(String token) {

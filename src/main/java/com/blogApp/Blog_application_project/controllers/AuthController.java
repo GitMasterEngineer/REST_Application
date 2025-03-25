@@ -31,37 +31,43 @@ public class AuthController {
 	private AuthenticationManager authenticationManager;
 
 	@PostMapping("/login")
-	public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest request) {
+	public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest request) throws Exception {
 
-//		this.authenticate(request.getUsername(), request.getPassword());
+		this.authenticate(request.getUsername(), request.getPassword());
+
+		UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getUsername());
+
+		String token = this.jwtTokenHelper.generateToken(userDetails);
+		JwtAuthResponse response = new JwtAuthResponse();
+		response.setToken(token);
+		return new ResponseEntity<JwtAuthResponse>(response, HttpStatus.OK);
+
+//		try {
+//			this.authenticate(request.getUsername(), request.getPassword());
 //
-//		UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getUsername());
+//			UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getUsername());
 //
-//		String token = this.jwtTokenHelper.generateToken(userDetails);
-//		JwtAuthResponse response = new JwtAuthResponse();
-//		response.setToken(token);
-//		return new ResponseEntity<JwtAuthResponse>(response, HttpStatus.OK);
-
-		try {
-			this.authenticate(request.getUsername(), request.getPassword());
-
-			UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getUsername());
-
-			String token = this.jwtTokenHelper.generateToken(userDetails);
-			JwtAuthResponse response = new JwtAuthResponse();
-			response.setToken(token);
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		} catch (BadCredentialsException e) {
-			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-		}
+//			String token = this.jwtTokenHelper.generateToken(userDetails);
+//			JwtAuthResponse response = new JwtAuthResponse();
+//			response.setToken(token);
+//			return new ResponseEntity<>(response, HttpStatus.OK);
+//		} catch (BadCredentialsException e) {
+//			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//		}
 
 	}
 
-	private void authenticate(String username, String password) {
+	private void authenticate(String username, String password) throws Exception {
 
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
 				password);
+		try {
 		this.authenticationManager.authenticate(authenticationToken);
+		}catch(BadCredentialsException ex)
+		{
+			System.out.println("Invlaid Details !!");
+			throw new Exception("Username and password Invalid !!");
+		}
 
 	}
 }

@@ -1,5 +1,7 @@
 package com.blogApp.Blog_application_project.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -26,6 +28,7 @@ public class UserDto {
 	@NotEmpty
 	@Size(min = 3, max = 10, message = "Password must be 3 chars and maximmum of 10 char")
 	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$", message = "Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a digit, and a special character")
+	@JsonIgnore
 	private String password;
 	@NotEmpty
 	private String about;

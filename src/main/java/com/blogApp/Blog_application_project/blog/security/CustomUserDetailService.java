@@ -23,7 +23,7 @@ public class CustomUserDetailService implements UserDetailsService {
 		System.out.println("Print username:"+username);
 		
 		User user = this.userRepo.findByEmail(username)
-				.orElseThrow(() -> new ResourceNotFoundException("User", "email:"+ username,0 ));
+				.orElseThrow(() -> new ResourceNotFoundException("User", "email:"+ username,0));
 
 		return user;
 		
