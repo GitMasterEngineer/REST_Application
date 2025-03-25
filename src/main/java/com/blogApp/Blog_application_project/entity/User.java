@@ -2,6 +2,7 @@ package com.blogApp.Blog_application_project.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,9 +56,10 @@ public class User implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<SimpleGrantedAuthority> authorities = this.roles.stream()
-				.map((role) -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-		return authorities;
+//		List<SimpleGrantedAuthority> authorities = this.roles.stream()
+//				.map((role) -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+//		return authorities;
+		return Collections.emptyList();
 	}
 
 	@Override
