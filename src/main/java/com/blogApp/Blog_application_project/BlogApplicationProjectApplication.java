@@ -15,11 +15,11 @@ import com.blogApp.Blog_application_project.entity.Role;
 import com.blogApp.Blog_application_project.repositories.RoleRepo;
 
 @SpringBootApplication
-public class BlogApplicationProjectApplication implements CommandLineRunner{
-	
+public class BlogApplicationProjectApplication implements CommandLineRunner {
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private RoleRepo roleRepo;
 
@@ -35,28 +35,26 @@ public class BlogApplicationProjectApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println(this.passwordEncoder.encode("gaurav@123"));
-		//System.out.println(this.passwordEncoder.encode("anup@123"));
-		
+		// System.out.println(this.passwordEncoder.encode("anup@123"));
+
 		try {
-			Role role=new Role();
+			Role role = new Role();
 			role.setId(AppConstant.ADMIN_USER);
 			role.setName("ADMIN_USER");
-			
-			Role role1=new Role();
+
+			Role role1 = new Role();
 			role1.setId(AppConstant.NORMAL_USER);
 			role1.setName("NORMAL_USER");
-			
-			List<Role> roles = List.of(role,role1);
+
+			List<Role> roles = List.of(role, role1);
 			List<Role> result = this.roleRepo.saveAll(roles);
-			result.forEach(r->{System.out.println(r.getName());
+			result.forEach(r -> {
+				System.out.println(r.getName());
 			});
-		
-		}catch(Exception e)
-		{
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
 
 }
