@@ -29,12 +29,12 @@ public class SecurityConfig {
 
 	public static final String[] PUBLIC_URLS = { 
 			"/api/v1/auth/**",
-			"/v3/api-docs",
+			"/v3/api-docs", // access API Docs in JSON
 	        "/v2/api-docs",		
 			"/swagger-ui/**", 
 			"/swagger-resources/**",
 			"/webjars/**"
-			};
+	};
 
 	@Autowired
 	private CustomUserDetailService customUserDetailService;
@@ -48,9 +48,7 @@ public class SecurityConfig {
 	public SecurityFilterChain securityfilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
-						.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-						.requestMatchers("/api/v1/auth/**").permitAll()
+						.requestMatchers(PUBLIC_URLS).permitAll()
 						.requestMatchers(HttpMethod.GET).permitAll()
 						.anyRequest()
 						.authenticated())

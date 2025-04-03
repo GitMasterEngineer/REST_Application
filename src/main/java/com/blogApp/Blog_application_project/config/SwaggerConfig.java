@@ -1,31 +1,46 @@
 package com.blogApp.Blog_application_project.config;
 
+
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import io.jsonwebtoken.lang.Collections;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.info.Contact;
+
 
 @Configuration
 public class SwaggerConfig {
 
-	@Bean
-	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.select().apis(RequestHandlerSelectors.any()).paths(PathSelectors.any()).build();
+    public static final String AUTHORIZATION_HEADER = "Authorization";
 
-	}
-	
-	private ApiInfo getInfo() {
-		// TODO Auto-generated method stub
-		return new ApiInfo("Blogging application : Backend Course","This course develope bu anup Don", "1.0","Terms and service"
-				,new Contact("anup","https://learncodewithdurgesh.com","anuppochchhi24@gmail.com"),"Lincense of APIs", "API  lincense URL",Collections.emptyList());
-	}
-
-	
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("Blogging Application API")
+                        .version("1.0")
+                        .description("This project is developed by Learn Code With Durgesh")
+                        .termsOfService("https://example.com/terms")
+                        .contact(new Contact()
+                                .name("Anup Pochchhi")
+                                .url("https://learncodewithdurgesh.com")
+                                .email("anuppochchhi24@gmail.com"))
+                        .license(new License()
+                                .name("Apache 2.0")
+                                .url("https://www.apache.org/licenses/LICENSE-2.0")))
+                // 🔐 Adding JWT Security
+                .addSecurityItem(new SecurityRequirement().addList("JWT"))
+                .components(new Components()
+                        .addSecuritySchemes("JWT", new SecurityScheme()
+                                .name(AUTHORIZATION_HEADER)
+                                .type(SecurityScheme.Type.HTTP)
+                                .scheme("bearer")
+                                .bearerFormat("JWT")));
+    }
 }

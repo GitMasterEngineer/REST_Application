@@ -19,7 +19,7 @@ public class CustomUserDetailService implements UserDetailsService {
 	// User details user load karega spring security la
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// loading user from databse by username
+		// loading user from database by username
 		//System.out.println("Print username:"+username);
 		
 		User user = this.userRepo.findByEmail(username)

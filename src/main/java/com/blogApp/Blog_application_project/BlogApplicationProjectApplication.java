@@ -34,19 +34,21 @@ public class BlogApplicationProjectApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		//System.out.println(this.passwordEncoder.encode("gaurav@123"));
+		System.out.println(this.passwordEncoder.encode("gaurav@123"));
 		 //System.out.println(this.passwordEncoder.encode("anup@123"));
 		//System.out.println(this.passwordEncoder.encode("ashish@123"));
-		System.out.println(this.passwordEncoder.encode("vishal@123"));
+		//System.out.println(this.passwordEncoder.encode("vishal@123"));
 
 		try {
 			Role role = new Role();
 			role.setId(AppConstant.ADMIN_USER);
-			role.setName("ADMIN_USER");
+			//role.setName("ADMIN_USER");
+			role.setName("ROLE_ADMIN");
 
 			Role role1 = new Role();
 			role1.setId(AppConstant.NORMAL_USER);
-			role1.setName("NORMAL_USER");
+			//role1.setName("NORMAL_USER");
+			role1.setName("ROLE_NORMAL");
 
 			List<Role> roles = List.of(role, role1);
 			List<Role> result = this.roleRepo.saveAll(roles);
