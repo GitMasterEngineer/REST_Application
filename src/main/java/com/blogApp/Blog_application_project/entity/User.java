@@ -2,6 +2,7 @@ package com.blogApp.Blog_application_project.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -58,6 +59,7 @@ public class User implements UserDetails {
 		List<SimpleGrantedAuthority> authorities = this.roles.stream()
 				.map((role) -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 		return authorities;
+
 	}
 
 	@Override
@@ -74,6 +76,18 @@ public class User implements UserDetails {
 	}
 
 	public boolean isEnabled() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+
 		return true;
 	}
 
